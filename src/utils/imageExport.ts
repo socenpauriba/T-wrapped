@@ -2,19 +2,53 @@ import { toPng } from 'html-to-image';
 
 export const exportToImage = async (element: HTMLElement): Promise<void> => {
   try {
-    const dataUrl = await toPng(element, {
-      quality: 0.95,
-      backgroundColor: 'white',
-      style: {
-        // Ensure proper rendering of gradients and other styles
-        transform: 'scale(1)',
-        transformOrigin: 'top left',
-      },
+    // Store original styles
+    const originalStyles = {
+      width: element.style.width,
+      maxWidth: element.style.maxWidth,
+      height: element.style.height,
+      padding: element.style.padding,
+      margin: element.style.margin,
+      transform: element.style.transform,
+      position: element.style.position
+    };
+
+    // Fixed square dimensions (1:1 aspect ratio)
+    const targetSize = 1080;
+
+    // Set temporary styles for capture
+    Object.assign(element.style, {
+      width: `${targetSize}px`,
+      maxWidth: `${targetSize}px`,
+      height: `${targetSize}px`,
+      padding: '32px',
+      margin: '0',
+      transform: 'none',
+      position: 'relative'
     });
 
-    // Create a link element to download the image
+    const dataUrl = await toPng(element, {
+      quality: 1,
+      backgroundColor: 'white',
+      width: targetSize,
+      height: targetSize,
+      style: {
+        transform: 'none',
+        transformOrigin: 'center',
+        margin: '0',
+        padding: '32px'
+      },
+      pixelRatio: 2 // Higher pixel ratio for better quality
+    });
+
+    // Restore original styles
+    Object.entries(originalStyles).forEach(([key, value]) => {
+      element.style[key as any] = value;
+    });
+
+    // Create and trigger download
     const link = document.createElement('a');
-    link.download = 'transport-wrapped.png';
+    link.download = 'T-wrapped.png';
     link.href = dataUrl;
     link.click();
   } catch (error) {

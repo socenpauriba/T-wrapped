@@ -9,11 +9,11 @@ interface StatCardProps {
 
 export const StatCard: React.FC<StatCardProps> = ({ icon: Icon, title, children }) => {
   return (
-    <div className="p-6 bg-gradient-to-br from-[#86c04d]/10 to-[#009889]/10 rounded-lg 
+    <div className="p-8 bg-gradient-to-br from-[#86c04d]/10 to-[#009889]/10 rounded-lg 
                    border border-[#86c04d]/20">
-      <div className="flex items-center space-x-3 mb-4">
-        <Icon className="w-6 h-6 text-[#86c04d]" />
-        <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+      <div className="flex items-center space-x-4 mb-6">
+        <Icon className="w-8 h-8 text-[#86c04d]" />
+        <h3 className="text-xl md:text-2xl font-semibold text-gray-800">{title}</h3>
       </div>
       {children}
     </div>

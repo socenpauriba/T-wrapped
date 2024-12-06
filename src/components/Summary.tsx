@@ -29,14 +29,14 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
         ref={summaryRef}
         className="w-full max-w-4xl mx-auto p-8 bg-white rounded-xl shadow-xl"
       >
-        <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-[#86c04d] to-[#009889] 
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-[#86c04d] to-[#009889] 
                        text-transparent bg-clip-text">
           El teu T-mobilitat wrapped
         </h2>
         
         <div className="grid gap-8">
           <StatCard icon={Train} title="Total Validacions">
-            <p className="text-3xl font-bold text-[#009889]">{summary.totalValidations}</p>
+            <p className="text-4xl md:text-5xl font-bold text-[#009889]">{summary.totalValidations}</p>
           </StatCard>
 
           <StatCard icon={Diamond} title="Top 5 estacions">
@@ -58,8 +58,8 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
           </StatCard>
         </div>
 
-        <div className="mt-8 text-center">
-          <p className="text-sm font-medium text-gray-500">
+        <div className="mt-12 text-center">
+          <p className="text-sm md:text-base font-medium text-gray-500">
             Fes el teu a 🌐 t-wrapped.nuvol.cat
           </p>
         </div>
