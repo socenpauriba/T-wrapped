@@ -1,0 +1,81 @@
+import React, { useRef } from 'react';
+import { TransportSummary } from '../types/transport';
+import { Train, Diamond, TowerControl, Share2 } from 'lucide-react';
+import { StatCard } from './summary/StatCard';
+import { TopList } from './summary/TopList';
+import { exportToImage } from '../utils/imageExport';
+
+interface SummaryProps {
+  summary: TransportSummary;
+}
+
+export const Summary: React.FC<SummaryProps> = ({ summary }) => {
+  const summaryRef = useRef<HTMLDivElement>(null);
+
+  const handleShare = async () => {
+    if (summaryRef.current) {
+      try {
+        await exportToImage(summaryRef.current);
+      } catch (error) {
+        console.error('Error generating image:', error);
+        alert('Hi ha hagut un error generant la imatge');
+      }
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      <div 
+        ref={summaryRef}
+        className="w-full max-w-4xl mx-auto p-8 bg-white rounded-xl shadow-xl"
+      >
+        <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-[#86c04d] to-[#009889] 
+                       text-transparent bg-clip-text">
+          El teu T-mobilitat wrapped
+        </h2>
+        
+        <div className="grid gap-8">
+          <StatCard icon={Train} title="Total Validacions">
+            <p className="text-3xl font-bold text-[#009889]">{summary.totalValidations}</p>
+          </StatCard>
+
+          <StatCard icon={Diamond} title="Top 5 estacions">
+            <TopList 
+              items={summary.topStations.map(station => ({
+                name: station.station,
+                count: station.count
+              }))}
+            />
+          </StatCard>
+
+          <StatCard icon={TowerControl} title="Top 5 operadores">
+            <TopList 
+              items={summary.topAgencies.map(agency => ({
+                name: agency.agency,
+                count: agency.count
+              }))}
+            />
+          </StatCard>
+        </div>
+
+        <div className="mt-8 text-center">
+          <p className="text-sm font-medium text-gray-500">
+            Fes el teu a 🌐 t-wrapped.nuvol.cat
+          </p>
+        </div>
+      </div>
+      <br></br>
+      <div className="flex justify-center">
+        <button
+          onClick={handleShare}
+          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#86c04d] to-[#009889] 
+                   text-white rounded-lg hover:opacity-90 transition-opacity duration-200 
+                   font-semibold shadow-md"
+        >
+          <Share2 className="w-5 h-5" />
+          Compartir a xarxes socials
+        </button>
+      </div>
+    </div>
+  );
+};
