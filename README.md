@@ -73,8 +73,9 @@ Aquest projecte està sota la llicència MIT. Consulta el fitxer `LICENSE` per m
 
 Desenvolupat amb [Bolt.new](https://bolt.new) per [Nuvol.cat](https://nuvol.cat)
 
-**Agraïments:**  
-[8Ad3v](https://github.com/8Ad3v) per la [Pull Request #1](https://github.com/socenpauriba/T-wrapped/pull/1): _"Llegir capçaleres en castellà"_.
+**Agraïments:**
+- [@albertgui](https://x.com/albertgui/status/1864674587763499406?s=46) per la idea original
+- [8Ad3v](https://github.com/8Ad3v) per la [Pull Request #1](https://github.com/socenpauriba/T-wrapped/pull/1): _"Llegir capçaleres en castellà"_.
 
 ---
 
