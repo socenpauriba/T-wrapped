@@ -1,9 +1,13 @@
-import React, { useRef } from 'react';
+import React, { useRef, lazy, Suspense } from 'react';
 import { TransportSummary } from '../types/transport';
 import { Train, Diamond, TowerControl, Share2 } from 'lucide-react';
 import { StatCard } from './summary/StatCard';
 import { TopList } from './summary/TopList';
-import { exportToImage } from '../utils/imageExport';
+
+// Lazy load the image export utility
+const exportToImage = lazy(() => import('../utils/imageExport').then(module => ({
+  default: module.exportToImage
+})));
 
 interface SummaryProps {
   summary: TransportSummary;
@@ -15,7 +19,8 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
   const handleShare = async () => {
     if (summaryRef.current) {
       try {
-        await exportToImage(summaryRef.current);
+        const exportFn = await import('../utils/imageExport').then(module => module.exportToImage);
+        await exportFn(summaryRef.current);
       } catch (error) {
         console.error('Error generating image:', error);
         alert('Hi ha hagut un error generant la imatge');

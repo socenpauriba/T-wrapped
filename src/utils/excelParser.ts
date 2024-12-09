@@ -25,7 +25,6 @@ export const parseExcelFile = async (file: File): Promise<TransportData[]> => {
           raw: false,
           blankrows: false,
         });
-        console.log("jsonData ", jsonData);
         // Skip empty rows at the beginning
         const headerRowIndex = jsonData.findIndex((row: any[]) =>
           row?.some(
@@ -43,8 +42,7 @@ export const parseExcelFile = async (file: File): Promise<TransportData[]> => {
         }
 
         const headers = jsonData[headerRowIndex] as string[];
-        console.log("headers ", headers);
-
+        
         const requiredColumns = {
           date:
             headers.indexOf("Data") !== -1

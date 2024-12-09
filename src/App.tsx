@@ -19,7 +19,7 @@ function App() {
             <div className="text-center mb-12">
               <p className="text-xl text-gray-600">
                 Descobreix els teus hàbits de transport públic. Puja el teu fitxer Excel 
-                i obtén un resum personalitzat del teu ús del transport.
+                i obté un resum personalitzat del teu ús del transport.
               </p>
             </div>
             
@@ -35,6 +35,8 @@ function App() {
                   {error}
                 </p>
               )}
+              <br></br>
+              <center><p className="text-xs text-gray-500 mt-1">No guardem ni recollim aquestes dades</p></center>
             </div>
 
             <HowTo />
