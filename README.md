@@ -75,7 +75,8 @@ Desenvolupat amb [Bolt.new](https://bolt.new) per [Nuvol.cat](https://nuvol.cat)
 
 **Agraïments:**
 - [@albertgui](https://x.com/albertgui/status/1864674587763499406?s=46) per la idea original
-- [8Ad3v](https://github.com/8Ad3v) per la [Pull Request #1](https://github.com/socenpauriba/T-wrapped/pull/1): _"Llegir capçaleres en castellà"_.
+- [@8Ad3v](https://github.com/8Ad3v) per la [Pull Request #1](https://github.com/socenpauriba/T-wrapped/pull/1): _"Llegir capçaleres en castellà"_.
+- [@dvidaal](https://github.com/dvidaal) per la [Pull Request #2](https://github.com/socenpauriba/T-wrapped/pull/2): _"Millora Imatge XXSS"_.
 
 ---
 
