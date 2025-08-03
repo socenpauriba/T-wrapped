@@ -96,11 +96,11 @@ const ValidationsCalendar: React.FC<ValidationsCalendarProps> = ({ data }) => {
   };
 
   return (
-    <div className="p-8 bg-gradient-to-br from-[#86c04d]/10 to-[#009889]/10 rounded-lg border border-[#86c04d]/20 mt-8">
+    <div className="hidden md:block p-8 bg-gradient-to-br from-[#86c04d]/10 to-[#009889]/10 rounded-lg border border-[#86c04d]/20 mt-8">
       <h3 className="flex items-center space-x-4 mb-6">
-          <CalendarDays className="w-8 h-8 text-[#86c04d]" />
-          <span className="text-xl md:text-2xl font-semibold text-gray-800">Calendari de Validacions</span>
-        </h3>
+        <CalendarDays className="w-8 h-8 text-[#86c04d]" />
+        <span className="text-xl md:text-2xl font-semibold text-gray-800">Calendari de Validacions</span>
+      </h3>
       {years.map(renderHeatmap)}
       <Tooltip id="cal-tip" delayShow={0} />
     </div>
