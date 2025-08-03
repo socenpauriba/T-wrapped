@@ -1,7 +1,9 @@
 import { TransportData, TransportSummary } from '../types/transport';
 
 export const analyzeTransportData = (data: TransportData[]): TransportSummary => {
-  const stationCount: { [key: string]: number } = {};
+    const stationCount: { [key: string]: number } = {};
+  const agencyCount: { [key: string]: number } = {};
+  const validationsByDayCount: { [key: string]: number } = {};
   const agencyCount: { [key: string]: number } = {};
 
   // Count occurrences
@@ -11,6 +13,10 @@ export const analyzeTransportData = (data: TransportData[]): TransportSummary =>
     }
     if (entry.agency) {
       agencyCount[entry.agency] = (agencyCount[entry.agency] || 0) + 1;
+    }
+    if (entry.date) {
+      const dateString = entry.date.toISOString().split('T')[0];
+      validationsByDayCount[dateString] = (validationsByDayCount[dateString] || 0) + 1;
     }
   });
 
@@ -26,9 +32,15 @@ export const analyzeTransportData = (data: TransportData[]): TransportSummary =>
     .slice(0, 5)
     .map(([agency, count]) => ({ agency, count }));
 
+    const validationsByDay = Object.entries(validationsByDayCount).map(([date, count]) => ({
+    date,
+    count,
+  }));
+
   return {
     totalValidations: data.length,
     topStations,
-    topAgencies
+    topAgencies,
+    validationsByDay,
   };
 };

@@ -15,4 +15,8 @@ export interface TransportSummary {
     agency: string;
     count: number;
   }>;
+  validationsByDay: Array<{
+    date: string;
+    count: number;
+  }>;
 }
