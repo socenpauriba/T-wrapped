@@ -1,10 +1,9 @@
 import { TransportData, TransportSummary } from '../types/transport';
 
 export const analyzeTransportData = (data: TransportData[]): TransportSummary => {
-    const stationCount: { [key: string]: number } = {};
+  const stationCount: { [key: string]: number } = {};
   const agencyCount: { [key: string]: number } = {};
   const validationsByDayCount: { [key: string]: number } = {};
-  const agencyCount: { [key: string]: number } = {};
 
   // Count occurrences
   data.forEach((entry) => {
