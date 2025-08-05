@@ -1,0 +1,79 @@
+{
+  "header": {
+    "title": "Wrapped"
+  },
+  "app": {
+    "description": "Descobreix els teus hàbits de transport públic. Puja el teu fitxer Excel i obté un resum personalitzat del teu ús del transport.",
+    "processing": "Processant el teu fitxer...",
+    "privacy": "No guardem ni recollim aquestes dades",
+    "newAnalysis": "Analitza un altre fitxer"
+  },
+  "fileUpload": {
+    "title": "Puja el teu fitxer Excel",
+    "dragDrop": "Arrossega el teu fitxer Excel aquí",
+    "selectFile": "o fes clic per seleccionar-lo",
+    "invalidFile": "Si us plau, selecciona un fitxer Excel vàlid (.xls o .xlsx)",
+    "supportedFormats": "Formats suportats: .xls, .xlsx"
+  },
+  "summary": {
+    "title": "El teu T-mobilitat wrapped",
+    "subtitle": "Aquí tens el resum dels teus viatges durant aquest període:",
+    "totalValidations": "Total de validacions",
+    "topStations": "Top 5 estacions més utilitzades",
+    "topOperators": "Top 5 operadors més utilitzats",
+    "validations": "validacions",
+    "shareImage": "Compartir a xarxes socials",
+    "downloadImage": "Descarregar imatge"
+  },
+  "howTo": {
+    "title": "Com obtenir el teu històric de viatges?",
+    "step1": {
+      "title": "Inicia sessió",
+      "description": "Accedeix a la web de T-mobilitat",
+      "link": "https://www.t-mobilitat.cat"
+    },
+    "step2": {
+      "title": "Àrea personal",
+      "description": "Accedeix a 'Gestionar targetes'"
+    },
+    "step3": {
+      "title": "Històric",
+      "description": "A 'Accions', selecciona 'Històric de moviments de suport'"
+    },
+    "step4": {
+      "title": "Descarrega",
+      "description": "Selecciona període i després descarrega en Excel"
+    },
+    "note": "Nota: Assegura't que el fitxer conté les columnes necessàries com ara data, estació i operador.",
+    "visit": "Visitar →",
+    "columnName": "Històric de moviments de suport"
+  },
+  "footer": {
+    "description": "T-Wrapped és una aplicació independent creada per analitzar les teves dades de transport públic. No està afiliada amb T-mobilitat o ATM.",
+    "madeWith": "Fet amb",
+    "by": "per",
+    "developedWith": "Desenvolupat amb",
+    "github": "Codi font a GitHub"
+  },
+  "language": {
+    "selector": "Idioma",
+    "catalan": "Català",
+    "spanish": "Castellà",
+    "english": "Anglès"
+  },
+  "common": {
+    "websitePromo": "Fes el teu a 🌐 t-wrapped.nuvol.cat"
+  },
+  "errors": {
+    "fileReadError": "No s'ha pogut llegir el fitxer",
+    "emptyFileError": "El fitxer Excel està buit",
+    "headersNotFoundError": "Format incorrecte: No s'han trobat les capçaleres esperades",
+    "invalidFormatError": "Format incorrecte: El fitxer ha de contenir les columnes Data, Agència, Operació i Estació Fix",
+    "noValidationsError": "No s'han trobat validacions al fitxer",
+    "processingError": "Error processant el fitxer",
+    "fileLoadError": "Error llegint el fitxer",
+    "invalidDateWarning": "Data invàlida a la fila",
+    "incompleteDataWarning": "Dades incompletes a la fila",
+    "processingRowError": "Error processant la fila"
+  }
+}

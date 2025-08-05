@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FileUpload } from './components/FileUpload';
 import { Summary } from './components/Summary';
 import { Header } from './components/Header';
@@ -7,6 +8,7 @@ import { Footer } from './components/Footer';
 import { useTransportData } from './hooks/useTransportData';
 
 function App() {
+  const { t } = useTranslation();
   const { summary, loading, error, handleFileSelect, resetData } = useTransportData();
 
   return (
@@ -18,8 +20,7 @@ function App() {
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-12">
               <p className="text-xl text-gray-600">
-                Descobreix els teus hàbits de transport públic. Puja el teu fitxer Excel 
-                i obté un resum personalitzat del teu ús del transport.
+                {t('app.description')}
               </p>
             </div>
             
@@ -27,7 +28,7 @@ function App() {
               <FileUpload onFileSelect={handleFileSelect} />
               {loading && (
                 <p className="text-center mt-4 text-gray-600">
-                  Processant el teu fitxer...
+                  {t('app.processing')}
                 </p>
               )}
               {error && (
@@ -36,7 +37,7 @@ function App() {
                 </p>
               )}
               <br></br>
-              <center><p className="text-xs text-gray-500 mt-1">No guardem ni recollim aquestes dades</p></center>
+              <center><p className="text-xs text-gray-500 mt-1">{t('app.privacy')}</p></center>
             </div>
 
             <HowTo />
@@ -53,7 +54,7 @@ function App() {
                          rounded-lg hover:opacity-90 transition-opacity duration-200 
                          font-semibold shadow-md"
               >
-                Analitzar un altre fitxer
+{t('app.newAnalysis')}
               </button>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Upload } from 'lucide-react';
 
 interface FileUploadProps {
@@ -6,6 +7,7 @@ interface FileUploadProps {
 }
 
 export const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect }) => {
+  const { t } = useTranslation();
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -32,7 +34,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect }) => {
     if (file && isValidExcelFile(file)) {
       onFileSelect(file);
     } else {
-      alert('Si us plau, selecciona un fitxer Excel vàlid (.xls o .xlsx)');
+      alert(t('fileUpload.invalidFile'));
     }
   }, [onFileSelect]);
 
@@ -43,7 +45,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect }) => {
       // Reset the input value to allow selecting the same file again
       e.target.value = '';
     } else if (file) {
-      alert('Si us plau, selecciona un fitxer Excel vàlid (.xls o .xlsx)');
+      alert(t('fileUpload.invalidFile'));
     }
   }, [onFileSelect]);
 
@@ -69,10 +71,10 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect }) => {
         <Upload className="w-12 h-12 text-[#86c04d]" />
         <div className="text-center">
           <p className="text-lg font-medium text-gray-700">
-            Arrossega el teu fitxer Excel aquí
+            {t('fileUpload.dragDrop')}
           </p>
           <p className="text-sm text-gray-500">
-            o fes clic per seleccionar-lo
+            {t('fileUpload.selectFile')}
           </p>
           <p className="text-xs text-[#009889] mt-2">
             Format T-mobilitat

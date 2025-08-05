@@ -1,4 +1,5 @@
 import React, { useRef, lazy, Suspense } from "react";
+import { useTranslation } from 'react-i18next';
 import { TransportSummary } from "../types/transport";
 import { Train, Diamond, TowerControl, Share2 } from "lucide-react";
 import { StatCard } from "./summary/StatCard";
@@ -17,6 +18,7 @@ interface SummaryProps {
 }
 
 export const Summary: React.FC<SummaryProps> = ({ summary }) => {
+  const { t } = useTranslation();
   const summaryRef = useRef<HTMLDivElement>(null);
 
   const handleShare = async () => {
@@ -28,7 +30,7 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
         await exportFn(summaryRef.current);
       } catch (error) {
         console.error("Error generating image:", error);
-        alert("Hi ha hagut un error generant la imatge");
+        alert(t('summary.downloadImage') + ' - Error');
       }
     }
   };
@@ -43,13 +45,13 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
           className="title-wrapped text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-[#86c04d] to-[#009889] 
                        text-transparent bg-clip-text"
         >
-          El teu T-mobilitat wrapped
+{t('summary.title')}
         </h2>
 
         <div className="grid gap-8">
           <StatCard
             icon={Train}
-            title="Total Validacions"
+            title={t('summary.totalValidations')}
             className="stat-card-validations"
           >
             <p className="text-4xl md:text-5xl font-bold text-[#009889]">
@@ -59,7 +61,7 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
 
           <StatCard
             icon={Diamond}
-            title="Top 5 estacions"
+            title={t('summary.topStations')}
             className="stat-card-stations"
           >
             <TopList
@@ -72,7 +74,7 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
 
           <StatCard
             icon={TowerControl}
-            title="Top 5 operadores"
+            title={t('summary.topOperators')}
             className="stat-card-operadores"
           >
             <TopList
@@ -89,7 +91,7 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
 
         <div className="mt-12 text-center">
           <p className="text-sm md:text-base font-medium text-gray-500">
-            Fes el teu a 🌐 t-wrapped.nuvol.cat
+            {t('common.websitePromo')}
           </p>
         </div>
       </div>
@@ -102,7 +104,7 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
                    font-semibold shadow-md"
         >
           <Share2 className="w-5 h-5" />
-          Compartir a xarxes socials
+{t('summary.shareImage')}
         </button>
       </div>
     </div>

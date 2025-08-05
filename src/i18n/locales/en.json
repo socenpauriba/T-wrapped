@@ -1,0 +1,79 @@
+{
+  "header": {
+    "title": "Wrapped"
+  },
+  "app": {
+    "description": "Discover your public transport habits. Upload your Excel file and get a personalized summary of your transport usage.",
+    "processing": "Processing your file...",
+    "privacy": "We don't store or collect this data",
+    "newAnalysis": "New analysis"
+  },
+  "fileUpload": {
+    "title": "Upload your Excel file",
+    "dragDrop": "Drag your Excel file here",
+    "selectFile": "or click to select it",
+    "invalidFile": "Please select a valid Excel file (.xls or .xlsx)",
+    "supportedFormats": "Supported formats: .xls, .xlsx"
+  },
+  "summary": {
+    "title": "Your T-mobilitat wrapped",
+    "subtitle": "Here's your travel summary for this period:",
+    "totalValidations": "Total validations",
+    "topStations": "Top 5 most used stations",
+    "topOperators": "Top 5 most used operators",
+    "validations": "validations",
+    "shareImage": "Share as image",
+    "downloadImage": "Download image"
+  },
+  "howTo": {
+    "title": "How to get your travel history?",
+    "step1": {
+      "title": "Log in",
+      "description": "Access T-mobilitat portal",
+      "link": "https://www.t-mobilitat.cat"
+    },
+    "step2": {
+      "title": "Personal area",
+      "description": "Access 'Manage cards'"
+    },
+    "step3": {
+      "title": "Travel history",
+      "description": "On 'Actions', select 'Historical card movements'"
+    },
+    "step4": {
+      "title": "Download",
+      "description": "Select period and then download to Excel"
+    },
+    "note": "Note: Make sure the file contains the necessary columns such as date, station, and operator.",
+    "visit": "Visit →",
+    "columnName": "Historical card movements"
+  },
+  "footer": {
+    "description": "T-Wrapped is an independent application created to analyze your public transport data. It is not affiliated with T-mobilitat or ATM.",
+    "madeWith": "Made with",
+    "by": "by",
+    "developedWith": "Developed with",
+    "github": "Source code on GitHub"
+  },
+  "language": {
+    "selector": "Language",
+    "catalan": "Catalan",
+    "spanish": "Spanish",
+    "english": "English"
+  },
+  "common": {
+    "websitePromo": "Make yours at 🌐 t-wrapped.nuvol.cat"
+  },
+  "errors": {
+    "fileReadError": "Could not read the file",
+    "emptyFileError": "The Excel file is empty",
+    "headersNotFoundError": "Invalid format: Expected headers not found",
+    "invalidFormatError": "Invalid format: The file must contain Date, Agency, Operation and Fixed Equipment columns",
+    "noValidationsError": "No validations found in the file",
+    "processingError": "Error processing the file",
+    "fileLoadError": "Error reading the file",
+    "invalidDateWarning": "Invalid date in row",
+    "incompleteDataWarning": "Incomplete data in row",
+    "processingRowError": "Error processing row"
+  }
+}

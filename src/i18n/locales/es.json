@@ -1,0 +1,79 @@
+{
+  "header": {
+    "title": "Wrapped"
+  },
+  "app": {
+    "description": "Descubre tus hábitos de transporte público. Sube tu archivo Excel y obtén un resumen personalizado de tu uso del transporte.",
+    "processing": "Procesando tu archivo...",
+    "privacy": "No guardamos ni recopilamos estos datos",
+    "newAnalysis": "Nuevo análisis"
+  },
+  "fileUpload": {
+    "title": "Sube tu archivo Excel",
+    "dragDrop": "Arrastra tu archivo Excel aquí",
+    "selectFile": "o haz clic para seleccionarlo",
+    "invalidFile": "Por favor, selecciona un archivo Excel válido (.xls o .xlsx)",
+    "supportedFormats": "Formatos soportados: .xls, .xlsx"
+  },
+  "summary": {
+    "title": "Tu T-mobilitat wrapped",
+    "subtitle": "Aquí tienes el resumen de tus viajes durante este período:",
+    "totalValidations": "Total de validaciones",
+    "topStations": "Top 5 estaciones más utilizadas",
+    "topOperators": "Top 5 operadores más utilizados",
+    "validations": "validaciones",
+    "shareImage": "Compartir como imagen",
+    "downloadImage": "Descargar imagen"
+  },
+  "howTo": {
+    "title": "¿Cómo obtener tu histórico de viajes?",
+    "step1": {
+      "title": "Inicia sesión",
+      "description": "Accede a la web de T-mobilitat",
+      "link": "https://www.t-mobilitat.cat"
+    },
+    "step2": {
+      "title": "Área personal",
+      "description": "Accede a 'Gestionar tarjetas'"
+    },
+    "step3": {
+      "title": "Histórico",
+      "description": "En 'Acciones', selecciona 'Histórico movimientos de soporte'"
+    },
+    "step4": {
+      "title": "Descargar",
+      "description": "Selecciona período y después descarga en Excel"
+    },
+    "note": "Nota: Asegúrate de que el archivo contiene las columnas necesarias como fecha, estación y operador.",
+    "visit": "Visitar →",
+    "columnName": "Histórico de movimientos de soporte"
+  },
+  "footer": {
+    "description": "T-Wrapped es una aplicación independiente creada para analizar tus datos de transporte público. No está afiliada con T-mobilitat o ATM.",
+    "madeWith": "Hecho con",
+    "by": "por",
+    "developedWith": "Desarrollado con",
+    "github": "Código fuente en GitHub"
+  },
+  "language": {
+    "selector": "Idioma",
+    "catalan": "Catalán",
+    "spanish": "Español",
+    "english": "Inglés"
+  },
+  "common": {
+    "websitePromo": "Haz el tuyo en 🌐 t-wrapped.nuvol.cat"
+  },
+  "errors": {
+    "fileReadError": "No se pudo leer el archivo",
+    "emptyFileError": "El archivo Excel está vacío",
+    "headersNotFoundError": "Formato incorrecto: No se encontraron las cabeceras esperadas",
+    "invalidFormatError": "Formato incorrecto: El archivo debe contener las columnas Fecha, Agencia, Operación y Estación Fijo",
+    "noValidationsError": "No se encontraron validaciones en el archivo",
+    "processingError": "Error procesando el archivo",
+    "fileLoadError": "Error leyendo el archivo",
+    "invalidDateWarning": "Fecha inválida en la fila",
+    "incompleteDataWarning": "Datos incompletos en la fila",
+    "processingRowError": "Error procesando la fila"
+  }
+}

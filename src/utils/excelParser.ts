@@ -2,21 +2,23 @@ import { read, utils } from "xlsx";
 import { TransportData } from "../types/transport";
 import { ExcelParseError } from "../types/errors";
 
-export const parseExcelFile = async (file: File): Promise<TransportData[]> => {
+type TranslationFunction = (key: string) => string;
+
+export const parseExcelFile = async (file: File, t: TranslationFunction): Promise<TransportData[]> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
     reader.onload = (e) => {
       try {
         if (!e.target?.result) {
-          throw new ExcelParseError("No s'ha pogut llegir el fitxer");
+          throw new ExcelParseError(t('errors.fileReadError'));
         }
 
         const data = new Uint8Array(e.target.result as ArrayBuffer);
         const workbook = read(data, { type: "array" });
 
         if (!workbook.SheetNames.length) {
-          throw new ExcelParseError("El fitxer Excel està buit");
+          throw new ExcelParseError(t('errors.emptyFileError'));
         }
 
         const worksheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -52,9 +54,7 @@ export const parseExcelFile = async (file: File): Promise<TransportData[]> => {
         );
 
         if (headerRowIndex === -1) {
-          throw new ExcelParseError(
-            "Format incorrecte: No s'han trobat les capçaleres esperades"
-          );
+          throw new ExcelParseError(t('errors.headersNotFoundError'));
         }
 
         const headers = jsonData[headerRowIndex] as string[];
@@ -77,9 +77,7 @@ export const parseExcelFile = async (file: File): Promise<TransportData[]> => {
 
         // Verify all required columns exist
         if (Object.values(requiredColumns).some((index) => index === -1)) {
-          throw new ExcelParseError(
-            "Format incorrecte: El fitxer ha de contenir les columnes Data, Agència, Operació i Estació Fix"
-          );
+          throw new ExcelParseError(t('errors.invalidFormatError'));
         }
 
         const transportData: TransportData[] = [];
@@ -114,7 +112,7 @@ export const parseExcelFile = async (file: File): Promise<TransportData[]> => {
               );
 
               if (isNaN(date.getTime())) {
-                console.warn(`Data invàlida a la fila ${i + 1}: ${dateStr}`);
+                console.warn(`${t('errors.invalidDateWarning')} ${i + 1}: ${dateStr}`);
                 continue;
               }
 
@@ -122,7 +120,7 @@ export const parseExcelFile = async (file: File): Promise<TransportData[]> => {
               const station = String(row[requiredColumns.station] || "").trim();
 
               if (!agency || !station) {
-                console.warn(`Dades incompletes a la fila ${i + 1}`);
+                console.warn(`${t('errors.incompleteDataWarning')} ${i + 1}`);
                 continue;
               }
 
@@ -133,13 +131,13 @@ export const parseExcelFile = async (file: File): Promise<TransportData[]> => {
                 operation,
               });
             } catch (error) {
-              console.warn(`Error processant la fila ${i + 1}:`, error);
+              console.warn(`${t('errors.processingRowError')} ${i + 1}:`, error);
             }
           }
         }
 
         if (!transportData.length) {
-          throw new ExcelParseError("No s'han trobat validacions al fitxer");
+          throw new ExcelParseError(t('errors.noValidationsError'));
         }
 
         resolve(transportData);
@@ -147,13 +145,13 @@ export const parseExcelFile = async (file: File): Promise<TransportData[]> => {
         reject(
           error instanceof ExcelParseError
             ? error
-            : new ExcelParseError("Error processant el fitxer")
+            : new ExcelParseError(t('errors.processingError'))
         );
       }
     };
 
     reader.onerror = () =>
-      reject(new ExcelParseError("Error llegint el fitxer"));
+      reject(new ExcelParseError(t('errors.fileLoadError')));
     reader.readAsArrayBuffer(file);
   });
 };

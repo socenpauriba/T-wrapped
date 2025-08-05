@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TransportSummary } from '../types/transport';
 import { parseExcelFile } from '../utils/excelParser';
 import { analyzeTransportData } from '../utils/analyzeData';
@@ -13,6 +14,7 @@ interface UseTransportDataReturn {
 }
 
 export const useTransportData = (): UseTransportDataReturn => {
+  const { t } = useTranslation();
   const [summary, setSummary] = useState<TransportSummary | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,11 +24,11 @@ export const useTransportData = (): UseTransportDataReturn => {
     setError(null);
     try {
       validateExcelFile(file);
-      const data = await parseExcelFile(file);
+      const data = await parseExcelFile(file, t);
       const analyzedData = analyzeTransportData(data);
       setSummary(analyzedData);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error inesperat processant el fitxer');
+      setError(err instanceof Error ? err.message : t('errors.processingError'));
       console.error(err);
     } finally {
       setLoading(false);
