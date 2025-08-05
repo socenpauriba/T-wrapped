@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { Tooltip } from 'react-tooltip';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Type definitions outdated, squareSize not included
@@ -20,6 +20,8 @@ interface ValidationsCalendarProps {
 }
 
 const ValidationsCalendar: React.FC<ValidationsCalendarProps> = ({ data }) => {
+  const { t } = useTranslation();
+  
   if (!data || data.length === 0) return null;
 
   const lastDateStr = data.reduce((max, d) => (d.date > max ? d.date : max), data[0].date);
@@ -65,8 +67,8 @@ const ValidationsCalendar: React.FC<ValidationsCalendarProps> = ({ data }) => {
           gutterSize={GUTTER}
           svgProps={{ width: FIXED_WIDTH, height: 90 }}
           showWeekdayLabels
-          weekdayLabels={["Dg", "Dl", "Dt", "Dc", "Dj", "Dv", "Ds"]}
-          monthLabels={["Gen", "Feb", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Des"]}
+          weekdayLabels={t('calendar.weekdays', { returnObjects: true }) as string[]}
+          monthLabels={t('calendar.monthsShort', { returnObjects: true }) as string[]}
           startDate={yearStart}
           endDate={yearEnd}
           values={fullYearData as any}
@@ -76,13 +78,13 @@ const ValidationsCalendar: React.FC<ValidationsCalendarProps> = ({ data }) => {
             }
             const dateObj = new Date(value.date);
             const day = dateObj.getDate();
-            const monthNames = ["gener","febrer","març","abril","maig","juny","juliol","agost","setembre","octubre","novembre","desembre"];
+            const monthNames = t('calendar.monthsLong', { returnObjects: true }) as string[];
             const monthName = monthNames[dateObj.getMonth()];
             const count = value.count || 0;
 
             return {
               'data-tooltip-id': 'cal-tip',
-              'data-tooltip-content': `${count === 0 ? 'Sense validacions' : count + ' validacions'} el ${day} de ${monthName}`,
+              'data-tooltip-content': `${count === 0 ? t('calendar.noValidations') : count + ' ' + t('calendar.validations')} ${t('calendar.tooltipOn')} ${day} ${t('calendar.tooltipOf')} ${monthName}`,
             } as { [key: string]: string };
           }}
           classForValue={(value: any) => {
@@ -99,7 +101,7 @@ const ValidationsCalendar: React.FC<ValidationsCalendarProps> = ({ data }) => {
     <div className="hidden md:block p-8 bg-gradient-to-br from-[#86c04d]/10 to-[#009889]/10 rounded-lg border border-[#86c04d]/20 mt-8">
       <h3 className="flex items-center space-x-4 mb-6">
         <CalendarDays className="w-8 h-8 text-[#86c04d]" />
-        <span className="text-xl md:text-2xl font-semibold text-gray-800">Calendari de Validacions</span>
+        <span className="text-xl md:text-2xl font-semibold text-gray-800">{t('calendar.title')}</span>
       </h3>
       {years.map(renderHeatmap)}
       <Tooltip id="cal-tip" delayShow={0} />

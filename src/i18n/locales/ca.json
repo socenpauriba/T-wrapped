@@ -23,7 +23,8 @@
     "topOperators": "Top 5 operadors més utilitzats",
     "validations": "validacions",
     "shareImage": "Compartir a xarxes socials",
-    "downloadImage": "Descarregar imatge"
+    "downloadImage": "Descarregar imatge",
+    "trips": "viatges"
   },
   "howTo": {
     "title": "Com obtenir el teu històric de viatges?",
@@ -63,6 +64,16 @@
   },
   "common": {
     "websitePromo": "Fes el teu a 🌐 t-wrapped.nuvol.cat"
+  },
+  "calendar": {
+    "title": "Calendari de Validacions",
+    "weekdays": ["Dg", "Dl", "Dt", "Dc", "Dj", "Dv", "Ds"],
+    "monthsShort": ["Gen", "Feb", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Des"],
+    "monthsLong": ["gener", "febrer", "març", "abril", "maig", "juny", "juliol", "agost", "setembre", "octubre", "novembre", "desembre"],
+    "noValidations": "Sense validacions",
+    "validations": "validacions",
+    "tooltipOn": "el",
+    "tooltipOf": "de"
   },
   "errors": {
     "fileReadError": "No s'ha pogut llegir el fitxer",

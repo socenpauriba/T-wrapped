@@ -31,7 +31,8 @@ export const analyzeTransportData = (data: TransportData[]): TransportSummary =>
     .slice(0, 5)
     .map(([agency, count]) => ({ agency, count }));
 
-    const validationsByDay = Object.entries(validationsByDayCount).map(([date, count]) => ({
+  // Get validations by day (f)
+  const validationsByDay = Object.entries(validationsByDayCount).map(([date, count]) => ({
     date,
     count,
   }));

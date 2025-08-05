@@ -23,7 +23,8 @@
     "topOperators": "Top 5 operadores más utilizados",
     "validations": "validaciones",
     "shareImage": "Compartir como imagen",
-    "downloadImage": "Descargar imagen"
+    "downloadImage": "Descargar imagen",
+    "trips": "viajes"
   },
   "howTo": {
     "title": "¿Cómo obtener tu histórico de viajes?",
@@ -63,6 +64,16 @@
   },
   "common": {
     "websitePromo": "Haz el tuyo en 🌐 t-wrapped.nuvol.cat"
+  },
+  "calendar": {
+    "title": "Calendario de Validaciones",
+    "weekdays": ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"],
+    "monthsShort": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+    "monthsLong": ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
+    "noValidations": "Sin validaciones",
+    "validations": "validaciones",
+    "tooltipOn": "el",
+    "tooltipOf": "de"
   },
   "errors": {
     "fileReadError": "No se pudo leer el archivo",

@@ -24,6 +24,7 @@ export interface TranslationResources {
     validations: string;
     shareImage: string;
     downloadImage: string;
+    trips: string;
   };
   howTo: {
     title: string;
@@ -62,6 +63,16 @@ export interface TranslationResources {
   };
   common: {
     websitePromo: string;
+  };
+  calendar: {
+    title: string;
+    weekdays: string[];
+    monthsShort: string[];
+    monthsLong: string[];
+    noValidations: string;
+    validations: string;
+    tooltipOn: string;
+    tooltipOf: string;
   };
   errors: {
     fileReadError: string;
