@@ -25,13 +25,29 @@ export const parseExcelFile = async (file: File): Promise<TransportData[]> => {
           raw: false,
           blankrows: false,
         });
+
         // Skip empty rows at the beginning
         const headerRowIndex = jsonData.findIndex((row: any[]) =>
           row?.some(
             (cell) =>
+              // Spanish headers
               cell === "NUM. TRANSACCIÓN" ||
+              cell === "FECHA" ||
+              cell === "AGENCIA" ||
+              cell === "OPERACIÓN" ||
+              cell === "ESTACIÓN FIJO" ||
+              // Catalan headers
+              cell === "Num.Transacción" ||
               cell === "Data" ||
-              cell === "Num.Transacción"
+              cell === "Agència" ||
+              cell === "Operació" ||
+              cell === "Estació Fix" ||
+              // English headers
+              cell === "Transaction Num." ||
+              cell === "Date" ||
+              cell === "Agency" ||
+              cell === "Operation" ||
+              cell === "Fixed Equipment"
           )
         );
 
@@ -43,23 +59,20 @@ export const parseExcelFile = async (file: File): Promise<TransportData[]> => {
 
         const headers = jsonData[headerRowIndex] as string[];
         
+        // Find column indices for different languages
+        const findColumnIndex = (columnNames: string[]) => {
+          for (const name of columnNames) {
+            const index = headers.indexOf(name);
+            if (index !== -1) return index;
+          }
+          return -1;
+        };
+
         const requiredColumns = {
-          date:
-            headers.indexOf("Data") !== -1
-              ? headers.indexOf("Data")
-              : headers.indexOf("FECHA"),
-          agency:
-            headers.indexOf("Agència") !== -1
-              ? headers.indexOf("Agència")
-              : headers.indexOf("AGENCIA"),
-          operation:
-            headers.indexOf("Operació") !== -1
-              ? headers.indexOf("Operació")
-              : headers.indexOf("OPERACIÓN"),
-          station:
-            headers.indexOf("Estació Fix") !== -1
-              ? headers.indexOf("Estació Fix")
-              : headers.indexOf("ESTACIÓN FIJO"),
+          date: findColumnIndex(["Data", "FECHA", "Date"]),
+          agency: findColumnIndex(["Agència", "AGENCIA", "Agency"]),
+          operation: findColumnIndex(["Operació", "OPERACIÓN", "Operation"]),
+          station: findColumnIndex(["Estació Fix", "ESTACIÓN FIJO", "Fixed Equipment"]),
         };
 
         // Verify all required columns exist
@@ -78,13 +91,15 @@ export const parseExcelFile = async (file: File): Promise<TransportData[]> => {
 
           const operation = String(row[requiredColumns.operation] || "").trim();
 
-          // Only process "Validació d'entrada" records
-          if (operation.includes("Validació")) {
+          const isValidation = operation.includes("Validació") || 
+                              operation.includes("Validación") || 
+                              operation.includes("validation");
+          
+          if (isValidation) {
             try {
               const dateStr = row[requiredColumns.date];
               if (!dateStr) continue;
 
-              // Parse date in format DD/MM/YYYY HH:mm:ss
               const [datePart, timePart] = dateStr.split(" ");
               const [day, month, year] = datePart.split("/").map(Number);
               const [hours, minutes, seconds] = timePart.split(":").map(Number);
