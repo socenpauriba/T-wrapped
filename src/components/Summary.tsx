@@ -3,6 +3,7 @@ import { TransportSummary } from "../types/transport";
 import { Train, Diamond, TowerControl, Share2 } from "lucide-react";
 import { StatCard } from "./summary/StatCard";
 import { TopList } from "./summary/TopList";
+import ValidationsCalendar from "./summary/ValidationsCalendar";
 
 // Lazy load the image export utility
 const exportToImage = lazy(() =>
@@ -82,6 +83,9 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
             />
           </StatCard>
         </div>
+
+        {/* Contribution calendar */}
+        <ValidationsCalendar data={summary.validationsByDay} />
 
         <div className="mt-12 text-center">
           <p className="text-sm md:text-base font-medium text-gray-500">

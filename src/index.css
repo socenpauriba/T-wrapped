@@ -2,6 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+.react-calendar-heatmap .color-empty {
+  fill: #ebedf0;
+}
+
+.react-calendar-heatmap .color-scale-1 {
+  fill: #9be9a8;
+}
+
+.react-calendar-heatmap .color-scale-2 {
+  fill: #40c463;
+}
+
+.react-calendar-heatmap .color-scale-3 {
+  fill: #30a14e;
+}
+
+.react-calendar-heatmap .color-scale-4 {
+  fill: #216e39;
+}
+
+/* Thin border around each day square */
+.react-calendar-heatmap rect {
+  stroke: #cbd5e1; /* Tailwind gray-300 */
+  stroke-width: 0.75;
+  rx: 2px;
+  ry: 2px;
+
+}
+
+/* Darker border on hover for visibility */
+.react-calendar-heatmap rect:hover {
+  stroke: #4a5568; /* Tailwind gray-700 */
+  stroke-width: 1;
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
