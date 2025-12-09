@@ -10,6 +10,7 @@ interface UseTransportDataReturn {
   error: string | null;
   handleFileSelect: (file: File) => Promise<void>;
   resetData: () => void;
+  setError: (error: string | null) => void;
 }
 
 export const useTransportData = (): UseTransportDataReturn => {
@@ -43,6 +44,7 @@ export const useTransportData = (): UseTransportDataReturn => {
     loading,
     error,
     handleFileSelect,
-    resetData
+    resetData,
+    setError
   };
 };
