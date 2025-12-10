@@ -3,18 +3,20 @@ import templateSrc from "../assets/template.png";
 
 // Configuration for text positions (adjust these values based on your template)
 const CONFIG = {
-  totalValidations: { x: 540, y: 400, fontSize: 120 }, // Center x is 540 for 1080px width
+  totalValidations: { x: 240, y: 1710, fontSize: 130 },
   topStations: { 
-    startX: 100, 
-    startY: 800, 
-    lineHeight: 60,
-    fontSize: 40 
+    leftX: 95,      // Left position for station names
+    rightX: 930,    // Right position for validation counts
+    startY: 850, 
+    lineHeight: 55,
+    fontSize: 35 
   },
   topAgencies: { 
-    startX: 600, 
-    startY: 800, 
-    lineHeight: 60,
-    fontSize: 40 
+    leftX: 95,      // Left position for agency names
+    rightX: 930,    // Right position for validation counts
+    startY: 1250, 
+    lineHeight: 55,
+    fontSize: 35
   }
 };
 
@@ -23,7 +25,7 @@ const loadImage = (src: string): Promise<HTMLImageElement> => {
     const img = new Image();
     img.crossOrigin = "anonymous";
     img.onload = () => resolve(img);
-    img.onerror = (e) => reject(new Error(`Failed to load image: ${src}`));
+    img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
     img.src = src;
   });
 };
@@ -58,23 +60,37 @@ export const generateImage = async (summary: TransportSummary): Promise<string> 
     );
 
     // 6. Draw Top Stations
-    ctx.textAlign = 'left';
     ctx.font = `bold ${CONFIG.topStations.fontSize}px sans-serif`;
     
     summary.topStations.slice(0, 5).forEach((station, index) => {
       const y = CONFIG.topStations.startY + (index * CONFIG.topStations.lineHeight);
-      const text = `${index + 1}. ${station.station} (${station.count})`;
-      ctx.fillText(text, CONFIG.topStations.startX, y);
+      
+      // Draw station name on the left
+      ctx.textAlign = 'left';
+      const stationName = `${index + 1}. ${station.station}`;
+      ctx.fillText(stationName, CONFIG.topStations.leftX, y);
+      
+      // Draw validation count on the right
+      ctx.textAlign = 'right';
+      const validationText = `${station.count} validacions`;
+      ctx.fillText(validationText, CONFIG.topStations.rightX, y);
     });
 
     // 7. Draw Top Agencies
-    ctx.textAlign = 'left'; // Or right/center depending on your layout
     ctx.font = `bold ${CONFIG.topAgencies.fontSize}px sans-serif`;
 
     summary.topAgencies.slice(0, 5).forEach((agency, index) => {
       const y = CONFIG.topAgencies.startY + (index * CONFIG.topAgencies.lineHeight);
-      const text = `${index + 1}. ${agency.agency} (${agency.count})`;
-      ctx.fillText(text, CONFIG.topAgencies.startX, y);
+      
+      // Draw agency name on the left
+      ctx.textAlign = 'left';
+      const agencyName = `${index + 1}. ${agency.agency}`;
+      ctx.fillText(agencyName, CONFIG.topAgencies.leftX, y);
+      
+      // Draw validation count on the right
+      ctx.textAlign = 'right';
+      const validationText = `${agency.count} validacions`;
+      ctx.fillText(validationText, CONFIG.topAgencies.rightX, y);
     });
 
     // 8. Return Data URL
