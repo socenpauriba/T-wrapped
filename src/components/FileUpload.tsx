@@ -3,9 +3,10 @@ import { Upload } from 'lucide-react';
 
 interface FileUploadProps {
   onFileSelect: (file: File) => void;
+  onError: (message: string) => void;
 }
 
-export const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect }) => {
+export const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect, onError }) => {
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -32,9 +33,9 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect }) => {
     if (file && isValidExcelFile(file)) {
       onFileSelect(file);
     } else {
-      alert('Si us plau, selecciona un fitxer Excel vàlid (.xls o .xlsx)');
+      onError('Si us plau, selecciona un fitxer Excel vàlid (.xls o .xlsx)');
     }
-  }, [onFileSelect]);
+  }, [onFileSelect, onError]);
 
   const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -43,9 +44,9 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect }) => {
       // Reset the input value to allow selecting the same file again
       e.target.value = '';
     } else if (file) {
-      alert('Si us plau, selecciona un fitxer Excel vàlid (.xls o .xlsx)');
+      onError('Si us plau, selecciona un fitxer Excel vàlid (.xls o .xlsx)');
     }
-  }, [onFileSelect]);
+  }, [onFileSelect, onError]);
 
   return (
     <div

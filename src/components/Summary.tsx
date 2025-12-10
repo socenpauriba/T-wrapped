@@ -125,8 +125,7 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
           </p>
         </div>
       </div>
-      <br></br>
-      <div className="flex justify-center gap-4 flex-wrap">
+      <div className="flex justify-center gap-4 flex-wrap mt-4">
         <button
           onClick={handleDownload}
           disabled={isDownloading}
