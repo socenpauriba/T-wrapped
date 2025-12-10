@@ -7,7 +7,7 @@ import { Footer } from './components/Footer';
 import { useTransportData } from './hooks/useTransportData';
 
 function App() {
-  const { summary, loading, error, handleFileSelect, resetData } = useTransportData();
+  const { summary, loading, error, handleFileSelect, resetData, setError } = useTransportData();
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -24,7 +24,7 @@ function App() {
             </div>
             
             <div className="max-w-md mx-auto">
-              <FileUpload onFileSelect={handleFileSelect} />
+              <FileUpload onFileSelect={handleFileSelect} onError={setError} />
               {loading && (
                 <p className="text-center mt-4 text-gray-600">
                   Processant el teu fitxer...
@@ -35,8 +35,7 @@ function App() {
                   {error}
                 </p>
               )}
-              <br></br>
-              <center><p className="text-xs text-gray-500 mt-1">No guardem ni recollim aquestes dades</p></center>
+              <p className="text-xs text-gray-500 mt-4 text-center">No guardem ni recollim aquestes dades</p>
             </div>
 
             <HowTo />
