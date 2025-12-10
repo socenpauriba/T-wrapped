@@ -70,7 +70,7 @@ const ValidationsCalendar: React.FC<ValidationsCalendarProps> = ({ data }) => {
     for (let m = 0; m < 12; m++) {
       const monthStart = new Date(year, m, 1);
       const monthEnd = new Date(year, m + 1, 0);
-      
+
       // Calculate week number for start and end
       const getWeekNum = (d: Date) => {
         const target = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
@@ -80,7 +80,7 @@ const ValidationsCalendar: React.FC<ValidationsCalendarProps> = ({ data }) => {
         const yearStart2 = new Date(Date.UTC(target.getUTCFullYear(), 0, 1));
         return Math.floor((firstThursday - yearStart2.valueOf()) / (7 * 24 * 60 * 60 * 1000)) + 1;
       };
-      
+
       monthBoundaries.push({
         start: getWeekNum(monthStart),
         end: getWeekNum(monthEnd),
@@ -127,12 +127,12 @@ const ValidationsCalendar: React.FC<ValidationsCalendarProps> = ({ data }) => {
             }}
           />
           {/* Month separators */}
-          <svg 
-            style={{ 
-              position: 'absolute', 
-              top: 0, 
-              left: 0, 
-              width: FIXED_WIDTH, 
+          <svg
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: FIXED_WIDTH,
               height: 90,
               pointerEvents: 'none'
             }}
