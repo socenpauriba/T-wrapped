@@ -43,7 +43,7 @@ const ValidationsCalendar: React.FC<ValidationsCalendarProps> = ({ data }) => {
   const renderHeatmap = (year: number) => {
     const yearStart = new Date(year, 0, 1);
     const yearEnd = new Date(year, 11, 31);
-    
+
     const dataMap = new Map(data.map(d => [d.date, d.count]));
 
     const fullYearData: CalendarDay[] = [];
@@ -55,42 +55,113 @@ const ValidationsCalendar: React.FC<ValidationsCalendarProps> = ({ data }) => {
       });
     }
 
-    return (
-      <div key={year} className="mb-8" style={{ width: FIXED_WIDTH }}>
-        {years.length > 1 && (
-          <h4 className="text-lg font-semibold text-gray-700 mb-2">{year}</h4>
-        )}
-        <Heatmap
-          squareSize={SQUARE}
-          gutterSize={GUTTER}
-          svgProps={{ width: FIXED_WIDTH, height: 90 }}
-          showWeekdayLabels
-          weekdayLabels={["Dg", "Dl", "Dt", "Dc", "Dj", "Dv", "Ds"]}
-          monthLabels={["Gen", "Feb", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Des"]}
-          startDate={yearStart}
-          endDate={yearEnd}
-          values={fullYearData as any}
-          tooltipDataAttrs={(value: any) => {
-            if (!value || !value.date) {
-              return { 'data-tooltip-id': 'cal-tip', 'data-tooltip-content': '' };
-            }
-            const dateObj = new Date(value.date);
-            const day = dateObj.getDate();
-            const monthNames = ["gener","febrer","març","abril","maig","juny","juliol","agost","setembre","octubre","novembre","desembre"];
-            const monthName = monthNames[dateObj.getMonth()];
-            const count = value.count || 0;
+    // Adjust start to previous Monday and end to next Sunday so weeks display Monday..Sunday
+    const adjustedStart = new Date(yearStart);
+    // move back to Monday (getDay: 0=Sun..6=Sat). If yearStart is Monday (1) leave it.
+    const back = (adjustedStart.getDay() + 6) % 7; // 0 if Monday
+    adjustedStart.setDate(adjustedStart.getDate() - back);
 
-            return {
-              'data-tooltip-id': 'cal-tip',
-              'data-tooltip-content': `${count === 0 ? 'Sense validacions' : count + ' validacions'} el ${day} de ${monthName}`,
-            } as { [key: string]: string };
-          }}
-          classForValue={(value: any) => {
-            if (!value || value.count === 0) return 'color-empty';
-            const level = Math.min(4, value.count);
-            return `color-scale-${level}`;
-          }}
-        />
+    const adjustedEnd = new Date(yearEnd);
+    const forward = (7 - ((adjustedEnd.getDay() + 6) % 7) - 1);
+    adjustedEnd.setDate(adjustedEnd.getDate() + forward);
+
+    // Calculate month boundaries (week number where each month starts/ends)
+    const monthBoundaries: { start: number; end: number }[] = [];
+    for (let m = 0; m < 12; m++) {
+      const monthStart = new Date(year, m, 1);
+      const monthEnd = new Date(year, m + 1, 0);
+      
+      // Calculate week number for start and end
+      const getWeekNum = (d: Date) => {
+        const target = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+        const dayNr = (target.getUTCDay() + 6) % 7;
+        target.setUTCDate(target.getUTCDate() - dayNr + 3);
+        const firstThursday = target.valueOf();
+        const yearStart2 = new Date(Date.UTC(target.getUTCFullYear(), 0, 1));
+        return Math.floor((firstThursday - yearStart2.valueOf()) / (7 * 24 * 60 * 60 * 1000)) + 1;
+      };
+      
+      monthBoundaries.push({
+        start: getWeekNum(monthStart),
+        end: getWeekNum(monthEnd),
+      });
+    }
+
+    const monthLabels = ["Gen", "Feb", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Des"];
+
+    return (
+      <div key={year} className="mb-8">
+        {years.length > 1 && (
+          <h4 className="text-lg font-semibold text-gray-700 mb-4">{year}</h4>
+        )}
+        <div className="relative" style={{ width: FIXED_WIDTH }}>
+          <Heatmap
+            squareSize={SQUARE}
+            gutterSize={GUTTER}
+            svgProps={{ width: FIXED_WIDTH, height: 90 }}
+            showWeekdayLabels
+            weekdayLabels={["Dl", "Dt", "Dc", "Dj", "Dv", "Ds", "Dg"]}
+            monthLabels={[]}
+            startDate={adjustedStart}
+            endDate={adjustedEnd}
+            values={fullYearData as any}
+            tooltipDataAttrs={(value: any) => {
+              if (!value || !value.date) {
+                return { 'data-tooltip-id': 'cal-tip', 'data-tooltip-content': '' };
+              }
+              const dateObj = new Date(value.date);
+              const day = dateObj.getDate();
+              const monthNames = ["gener", "febrer", "març", "abril", "maig", "juny", "juliol", "agost", "setembre", "octubre", "novembre", "desembre"];
+              const monthName = monthNames[dateObj.getMonth()];
+              const count = value.count || 0;
+
+              return {
+                'data-tooltip-id': 'cal-tip',
+                'data-tooltip-content': `${count === 0 ? 'Sense validacions' : count + ' validacions'} el ${day} de ${monthName}`,
+              } as { [key: string]: string };
+            }}
+            classForValue={(value: any) => {
+              if (!value || value.count === 0) return 'color-empty';
+              const level = Math.min(4, value.count);
+              return `color-scale-${level}`;
+            }}
+          />
+          {/* Month separators */}
+          <svg 
+            style={{ 
+              position: 'absolute', 
+              top: 0, 
+              left: 0, 
+              width: FIXED_WIDTH, 
+              height: 90,
+              pointerEvents: 'none'
+            }}
+          >
+            {monthBoundaries.slice(0, -1).map((_, idx) => {
+              const nextMonth = monthBoundaries[idx + 1];
+              const weekPos = nextMonth.start - 1;
+              const x = 28 + weekPos * (SQUARE + GUTTER);
+              return (
+                <line
+                  key={`sep-${idx}`}
+                  x1={x}
+                  y1={0}
+                  x2={x}
+                  y2={90}
+                  stroke="#ccc"
+                  strokeWidth={1}
+                  opacity={0.5}
+                />
+              );
+            })}
+          </svg>
+        </div>
+        {/* Month labels */}
+        <div className="flex justify-between text-xs text-gray-600 mt-1 px-7" style={{ width: FIXED_WIDTH }}>
+          {monthLabels.map((label) => (
+            <span key={label}>{label}</span>
+          ))}
+        </div>
       </div>
     );
   };
