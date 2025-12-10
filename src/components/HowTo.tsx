@@ -6,13 +6,8 @@ export const HowTo: React.FC = () => {
     {
       icon: <LogIn className="w-6 h-6" />,
       title: "Inicia sessió",
-      description: "Accedeix a la web de T-mobilitat",
-      link: "https://t-mobilitat.atm.cat/"
-    },
-    {
-      icon: <CreditCard className="w-6 h-6" />,
-      title: "Àrea personal",
-      description: "Ves a 'Gestionar targetes'"
+      description: "Accedeix a l'àrea personal de T-mobilitat",
+      link: "https://t-mobilitat.atm.cat/web/t-mobilitat/area-personal/llistat-de-suports"
     },
     {
       icon: <FileSpreadsheet className="w-6 h-6" />,
@@ -32,7 +27,8 @@ export const HowTo: React.FC = () => {
         Com obtenir el teu històric de viatges?
       </h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="flex justify-center">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
         {steps.map((step, index) => (
           <div 
             key={index}
@@ -81,6 +77,7 @@ export const HowTo: React.FC = () => {
             </div>
           </div>
         ))}
+        </div>
       </div>
     </div>
   );
