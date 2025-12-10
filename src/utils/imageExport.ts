@@ -7,6 +7,7 @@ const CONFIG = {
   topStations: { 
     leftX: 95,      // Left position for station names
     rightX: 930,    // Right position for validation counts
+    maxWidth: 750,  // Maximum width for station names before truncating
     startY: 850, 
     lineHeight: 55,
     fontSize: 35 
@@ -14,6 +15,7 @@ const CONFIG = {
   topAgencies: { 
     leftX: 95,      // Left position for agency names
     rightX: 930,    // Right position for validation counts
+    maxWidth: 750,  // Maximum width for agency names before truncating
     startY: 1250, 
     lineHeight: 55,
     fontSize: 35
@@ -59,16 +61,23 @@ export const generateImage = async (summary: TransportSummary): Promise<string> 
       CONFIG.totalValidations.y
     );
 
+    // Helper function to truncate text to max 34 characters
+    const truncateText = (text: string, maxChars: number = 35): string => {
+      if (text.length <= maxChars) return text;
+      return text.slice(0, maxChars - 3) + '...';
+    };
+
     // 6. Draw Top Stations
     ctx.font = `bold ${CONFIG.topStations.fontSize}px sans-serif`;
     
     summary.topStations.slice(0, 5).forEach((station, index) => {
       const y = CONFIG.topStations.startY + (index * CONFIG.topStations.lineHeight);
       
-      // Draw station name on the left
+      // Draw station name on the left (truncated if needed)
       ctx.textAlign = 'left';
       const stationName = `${index + 1}. ${station.station}`;
-      ctx.fillText(stationName, CONFIG.topStations.leftX, y);
+      const truncatedStation = truncateText(stationName, 34);
+      ctx.fillText(truncatedStation, CONFIG.topStations.leftX, y);
       
       // Draw validation count on the right
       ctx.textAlign = 'right';
@@ -82,10 +91,11 @@ export const generateImage = async (summary: TransportSummary): Promise<string> 
     summary.topAgencies.slice(0, 5).forEach((agency, index) => {
       const y = CONFIG.topAgencies.startY + (index * CONFIG.topAgencies.lineHeight);
       
-      // Draw agency name on the left
+      // Draw agency name on the left (truncated if needed)
       ctx.textAlign = 'left';
       const agencyName = `${index + 1}. ${agency.agency}`;
-      ctx.fillText(agencyName, CONFIG.topAgencies.leftX, y);
+      const truncatedAgency = truncateText(agencyName, 34);
+      ctx.fillText(truncatedAgency, CONFIG.topAgencies.leftX, y);
       
       // Draw validation count on the right
       ctx.textAlign = 'right';

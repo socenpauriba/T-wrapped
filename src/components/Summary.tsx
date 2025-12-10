@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { TransportSummary } from "../types/transport";
-import { Train, Diamond, TowerControl, Share2, Download } from "lucide-react";
+import { Train, Diamond, TowerControl, Share2, Download, Loader2 } from "lucide-react";
 import { StatCard } from "./summary/StatCard";
 import { TopList } from "./summary/TopList";
 import ValidationsCalendar from "./summary/ValidationsCalendar";
@@ -20,9 +20,11 @@ interface SummaryProps {
 export const Summary: React.FC<SummaryProps> = ({ summary }) => {
   const summaryRef = useRef<HTMLDivElement>(null);
   const { shareImage, isSharing } = useWebImageShare();
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownload = async () => {
     if (summary) {
+      setIsDownloading(true);
       try {
         const exportFn = await import("../utils/imageExport").then(
           (module) => module.exportToImage
@@ -31,6 +33,8 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
       } catch (error) {
         console.error("Error generating image:", error);
         alert("Hi ha hagut un error generant la imatge");
+      } finally {
+        setIsDownloading(false);
       }
     }
   };
@@ -125,12 +129,17 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
       <div className="flex justify-center gap-4 flex-wrap">
         <button
           onClick={handleDownload}
+          disabled={isDownloading}
           className="flex items-center gap-2 px-6 py-3 bg-white text-[#009889] border-2 border-[#009889]
                    rounded-lg hover:bg-gray-50 transition-colors duration-200 
-                   font-semibold shadow-md"
+                   font-semibold shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Download className="w-5 h-5" />
-          Descarregar
+          {isDownloading ? (
+            <Loader2 className="w-5 h-5 animate-spin" />
+          ) : (
+            <Download className="w-5 h-5" />
+          )}
+          {isDownloading ? 'Generant...' : 'Descarregar'}
         </button>
 
         <button
@@ -140,7 +149,11 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
                    text-white rounded-lg hover:opacity-90 transition-opacity duration-200 
                    font-semibold shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Share2 className="w-5 h-5" />
+          {isSharing ? (
+            <Loader2 className="w-5 h-5 animate-spin" />
+          ) : (
+            <Share2 className="w-5 h-5" />
+          )}
           {isSharing ? 'Compartint...' : 'Compartir'}
         </button>
       </div>
