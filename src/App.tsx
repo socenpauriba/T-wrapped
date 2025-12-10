@@ -35,8 +35,7 @@ function App() {
                   {error}
                 </p>
               )}
-              <br></br>
-              <center><p className="text-xs text-gray-500 mt-1">No guardem ni recollim aquestes dades</p></center>
+              <p className="text-xs text-gray-500 mt-4 text-center">No guardem ni recollim aquestes dades</p>
             </div>
 
             <HowTo />

@@ -93,8 +93,7 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
           </p>
         </div>
       </div>
-      <br></br>
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-4">
         <button
           onClick={handleShare}
           className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#86c04d] to-[#009889] 
