@@ -13,7 +13,20 @@ interface UseWebImageShareReturn {
 
 export const useWebImageShare = (): UseWebImageShareReturn => {
   const [isSharing, setIsSharing] = useState(false);
-  const [canShare, setCanShare] = useState(true); // Optimistically true, updated on check
+  
+  // Check if Web Share API is available at mount time
+  const [canShare] = useState(() => {
+    if (typeof navigator === 'undefined' || !navigator.canShare) {
+      return false;
+    }
+    // Test with a dummy file to check if file sharing is supported
+    try {
+      const dummyFile = new File(['test'], 'test.txt', { type: 'text/plain' });
+      return navigator.canShare({ files: [dummyFile] });
+    } catch {
+      return false;
+    }
+  });
 
   const shareImage = useCallback(async (imageUrl: string, title: string = 'Shared Image', text: string = ''): Promise<ShareResult> => {
     setIsSharing(true);
@@ -46,7 +59,6 @@ export const useWebImageShare = (): UseWebImageShareReturn => {
         // Fallback: If file sharing isn't supported, try sharing just the URL/Text
         // or throw an error to be handled by the caller (e.g. to open a modal)
         console.warn('Native file sharing not supported on this device/browser.');
-        setCanShare(false);
         return { success: false, error: new Error('Native file sharing not supported') };
       }
 

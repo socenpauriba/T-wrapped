@@ -19,7 +19,7 @@ interface SummaryProps {
 
 export const Summary: React.FC<SummaryProps> = ({ summary }) => {
   const summaryRef = useRef<HTMLDivElement>(null);
-  const { shareImage, isSharing } = useWebImageShare();
+  const { shareImage, isSharing, canShare } = useWebImageShare();
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownload = async () => {
@@ -142,20 +142,22 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
           {isDownloading ? 'Generant...' : 'Descarregar'}
         </button>
 
-        <button
-          onClick={handleNativeShare}
-          disabled={isSharing}
-          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#86c04d] to-[#009889] 
-                   text-white rounded-lg hover:opacity-90 transition-opacity duration-200 
-                   font-semibold shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isSharing ? (
-            <Loader2 className="w-5 h-5 animate-spin" />
-          ) : (
-            <Share2 className="w-5 h-5" />
-          )}
-          {isSharing ? 'Compartint...' : 'Compartir'}
-        </button>
+        {canShare && (
+          <button
+            onClick={handleNativeShare}
+            disabled={isSharing}
+            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#86c04d] to-[#009889] 
+                     text-white rounded-lg hover:opacity-90 transition-opacity duration-200 
+                     font-semibold shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isSharing ? (
+              <Loader2 className="w-5 h-5 animate-spin" />
+            ) : (
+              <Share2 className="w-5 h-5" />
+            )}
+            {isSharing ? 'Compartint...' : 'Compartir'}
+          </button>
+        )}
       </div>
     </div>
   );
