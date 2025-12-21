@@ -43,8 +43,7 @@ npm run dev
 
 ## 📖 Com utilitzar-ho
 
-1. Accedeix a [t-mobilitat.atm.cat](https://t-mobilitat.atm.cat/)
-2. Inicia sessió i ves a "Àrea personal" → "Gestionar targetes"
+1. Inicia sessió a [t-mobilitat.atm.cat](https://t-mobilitat.atm.cat/web/t-mobilitat/area-personal/llistat-de-suports)
 3. A "Accions", selecciona "Històric de moviments de suport"
 4. Selecciona el període i a "Tipus d'operació" escull "Validació d'entrada"
 5. Descarrega les dades en format Excel
@@ -77,7 +76,11 @@ Desenvolupat amb [Bolt.new](https://bolt.new) per [Nuvol.cat](https://nuvol.cat)
 - [@albertgui](https://x.com/albertgui/status/1864674587763499406?s=46) per la idea original
 - [@8Ad3v](https://github.com/8Ad3v) per la [Pull Request #1](https://github.com/socenpauriba/T-wrapped/pull/1): _"Llegir capçaleres en castellà"_.
 - [@dvidaal](https://github.com/dvidaal) per la [Pull Request #2](https://github.com/socenpauriba/T-wrapped/pull/2): _"Millora Imatge XXSS"_.
-- [@miquelt9](https://github.com/miquelt9) per la [Pull Request #3](https://github.com/socenpauriba/T-wrapped/pull/3), [#4](https://github.com/socenpauriba/T-wrapped/pull/4), [#9](https://github.com/socenpauriba/T-wrapped/pull/9), [#10](https://github.com/socenpauriba/T-wrapped/pull/10) i [#11](https://github.com/socenpauriba/T-wrapped/pull/11): _"Heatmap de les validacions + suport ENG + Infra i linter + Canvi de html tags a tailwind classes + replace alerts with in-ui error handling"_.
+- [@miquelt9](https://github.com/miquelt9) per [Múltiples Pull Request](https://github.com/socenpauriba/T-wrapped/issues?q=is%3Apr%20author%3Amiquelt9).
+
+<a href="https://github.com/socenpauriba/t-wrapped/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=socenpauriba/t-wrapped" />
+</a>
 
 ---
 
