@@ -1,16 +1,17 @@
-import React, { useRef, lazy, Suspense } from "react";
+import React, { useRef, useState } from "react";
 import { TransportSummary } from "../types/transport";
-import { Train, Diamond, TowerControl, Share2 } from "lucide-react";
+import { Train, Diamond, TowerControl, Share2, Download, Loader2 } from "lucide-react";
 import { StatCard } from "./summary/StatCard";
 import { TopList } from "./summary/TopList";
 import ValidationsCalendar from "./summary/ValidationsCalendar";
+import { useWebImageShare } from "../hooks/useWebImageShare";
 
 // Lazy load the image export utility
-const exportToImage = lazy(() =>
-  import("../utils/imageExport").then((module) => ({
-    default: module.exportToImage,
-  }))
-);
+// const exportToImage = lazy(() =>
+//   import("../utils/imageExport").then((module) => ({
+//     default: module.exportToImage,
+//   }))
+// );
 
 interface SummaryProps {
   summary: TransportSummary;
@@ -18,17 +19,48 @@ interface SummaryProps {
 
 export const Summary: React.FC<SummaryProps> = ({ summary }) => {
   const summaryRef = useRef<HTMLDivElement>(null);
+  const { shareImage, isSharing, canShare } = useWebImageShare();
+  const [isDownloading, setIsDownloading] = useState(false);
 
-  const handleShare = async () => {
-    if (summaryRef.current) {
+  const handleDownload = async () => {
+    if (summary) {
+      setIsDownloading(true);
       try {
         const exportFn = await import("../utils/imageExport").then(
           (module) => module.exportToImage
         );
-        await exportFn(summaryRef.current);
+        await exportFn(summary);
       } catch (error) {
         console.error("Error generating image:", error);
         alert("Hi ha hagut un error generant la imatge");
+      } finally {
+        setIsDownloading(false);
+      }
+    }
+  };
+
+  const handleNativeShare = async () => {
+    if (summary) {
+      try {
+        const generateFn = await import("../utils/imageExport").then(
+          (module) => module.generateImage
+        );
+        const dataUrl = await generateFn(summary);
+        const result = await shareImage(dataUrl, 'T-Wrapped', 'El meu resum de T-mobilitat!');
+        
+        if (!result.success) {
+          // Check if it's because sharing is not supported
+          if (result.error instanceof Error && result.error.message === 'Native file sharing not supported') {
+             alert("El teu dispositiu no suporta la compartició d'imatges directament. La imatge es descarregarà.");
+             const link = document.createElement("a");
+             link.download = "T-wrapped.png";
+             link.href = dataUrl;
+             link.click();
+          }
+        }
+      } catch (error) {
+        console.error("Error sharing image:", error);
+        alert("Hi ha hagut un error compartint la imatge");
       }
     }
   };
@@ -93,16 +125,38 @@ export const Summary: React.FC<SummaryProps> = ({ summary }) => {
           </p>
         </div>
       </div>
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center gap-4 flex-wrap mt-4">
         <button
-          onClick={handleShare}
-          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#86c04d] to-[#009889] 
-                   text-white rounded-lg hover:opacity-90 transition-opacity duration-200 
-                   font-semibold shadow-md"
+          onClick={handleDownload}
+          disabled={isDownloading}
+          className="flex items-center gap-2 px-6 py-3 bg-white text-[#009889] border-2 border-[#009889]
+                   rounded-lg hover:bg-gray-50 transition-colors duration-200 
+                   font-semibold shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Share2 className="w-5 h-5" />
-          Compartir a xarxes socials
+          {isDownloading ? (
+            <Loader2 className="w-5 h-5 animate-spin" />
+          ) : (
+            <Download className="w-5 h-5" />
+          )}
+          {isDownloading ? 'Generant...' : 'Descarregar'}
         </button>
+
+        {canShare && (
+          <button
+            onClick={handleNativeShare}
+            disabled={isSharing}
+            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#86c04d] to-[#009889] 
+                     text-white rounded-lg hover:opacity-90 transition-opacity duration-200 
+                     font-semibold shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isSharing ? (
+              <Loader2 className="w-5 h-5 animate-spin" />
+            ) : (
+              <Share2 className="w-5 h-5" />
+            )}
+            {isSharing ? 'Compartint...' : 'Compartir'}
+          </button>
+        )}
       </div>
     </div>
   );
